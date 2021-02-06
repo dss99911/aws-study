@@ -1,7 +1,7 @@
 ## Links
 - [ ] [Link](https://us-east-2.console.aws.amazon.com/cloudformation/home?region=us-east-2#/)
 - [ ] [Doc](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
-
+- [ ] [Sample Templates](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-sample-templates-us-east-2.html)
 ## Explanation
 
 - CloudFormation 템플릿 언어를 사용하여 YAML 또는 JSON 형식으로 인프라를 코딩하거나 제공되는 다양한 샘플 템플릿에서 시작합니다.

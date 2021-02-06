@@ -1,8 +1,10 @@
 # SAM
 
 ## Docs
-- [Doc](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
-- [Install SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install-mac.html)
+- [ ] [Doc](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
+- [x] [Install SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install-mac.html)
+- [ ] [Process DynamoDB events](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-example-ddb.html) : Lambda function that's invoked by a DynamoDB table event source
+- [ ] [Process Amazon S3 events](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-example-s3.html) : Lambda invoked when S3 object upload event occurred
 
 ## Short Explanation
 1. Intellij 에서 AWS Serverless Application 프로젝트를 생성함.
@@ -11,18 +13,19 @@
 ```shell
 sam build
 
-#deploy
+#deploy(on intellij, right click of template.yaml -> Deploy Serverless Application)
 sam deploy --guided
 sam deploy --guided --profile {credential-namey}
 sam deploy #samconfig.toml이 저장되었다면, 다음엔 deploy만 호출하면 됨
 
 #able to run by intellij AWS Lambda Run configuration
+#able to debug
 sam local invoke HelloWorldFunction --event events/event.json
 
 #start local api
 sam local start-api 
 
-#test. able to run on intellij
+#test. able to run on intellij(able to debug)
 hello-word$ npm run test
 ```
 
