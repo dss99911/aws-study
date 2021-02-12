@@ -6,3 +6,5 @@ aws configure
 
 #Make different credentials
 aws configure --profile {profile-name}
+
+aws {somemethod} --profile {profile-name}
