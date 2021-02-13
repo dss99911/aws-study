@@ -1,0 +1,1 @@
+- [x] [Access RDS from public](https://aws.amazon.com/ko/premiumsupport/knowledge-center/rds-connectivity-instance-subnet-vpc/)
