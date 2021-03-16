@@ -6,3 +6,6 @@
 - Athena는 쿼리하는 얘이고, Glue는 데이터베이스를 제공하는 얘(실제로 데이터는 Glue가 가지고 있는 건 아니지만, 데이터의 위치를 알고, 데이터의 스키마를 알기 때문에, 데이터베이스처럼 사용 가능)
 - 다양한 기능이 많겠지만, 현재 알고 있는건, s3의 데이터를 데이터베이스 처럼 인식하게 하여, Athena에서 활용할 수 있게 해주는 기능
 
+- [ ] [Dynamic Frame](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-dynamic-frame.html)
+    - similar to Dataframe but self-describing
+    - dynamo db에 저장할 때 씀
