@@ -24,6 +24,7 @@
 #### Add Steps
 - [Work with Steps Using the AWS CLI and Console](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html)
 - [Adding a Spark Step](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html)
+- 여러 step을 추가할 경우, 병렬로 시작이 되고, 순차처리가 안됨(airflow dag로 순차처리하도록 처리했음)
 ```shell
 #!/bin/bash
 aws emr add-steps \
