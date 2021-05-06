@@ -43,14 +43,22 @@ aws emr add-steps \
 
 ## Usage
 - zeppelin 접속은 해당 포트를 열기만 해도 됨.
-    - [ ] [disable anonymous](https://docs.aws.amazon.com/whitepapers/latest/teaching-big-data-skills-with-amazon-emr/step-2-disabling-anonymous-access.html)
+    - [x] [disable anonymous](https://docs.aws.amazon.com/whitepapers/latest/teaching-big-data-skills-with-amazon-emr/step-2-disabling-anonymous-access.html)
+      - 위의 문서로 하면 안됨. spark-study참조하기.
     - vpn을 통해서만 접속하게 하는 걸 권장
+    - http://ec2-1-1-1-1.us-east-2.compute.amazonaws.com:8890/ 처럼 되어 있는 걸, ip 주소만 가져와서, 1.1.1.1:8890 으로 접속
 - cluster hadoop 마스터 서버 접속방법
   - 22 포트 허용
   - `ssh -i {pem-file} hadoop@{master-server-ip}`
   - 클러스터의 요약 정보에 접속 방식 설명되어 있음
   ![img.png](img.png)
-  
+
+
+## Error
+- The EC2 Security Groups [sg-03b6c0c37c0cecce8] contain one or more ingress rules to ports other than [22] which allow public access.
+  - delete the existing security groups. EMR seems to use existing security groups which is created by other EMR cluster.
+  - zeppelin 접속을 위해서, inbound에 8890 포트를 열어서 그런건가?
+  - ![img_1.png](img_1.png) 에서 8890을 허용해주면, security group에 8890 port를 추가했어도, 이후 cluster생성시 정상 작동하지 않을까?
 
 - [x] EMR에서 S3 접속하기 (자신의 s3는 기본 role에 등록되어 있음)
 - [ ] glue를 통해, Hive로 sql쿼리해보기
