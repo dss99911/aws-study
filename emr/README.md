@@ -40,6 +40,11 @@ aws emr add-steps \
 - Spot Instance 
   - It offers Significant savings(10 times less than on-demand)
   - 제플린에서 spark context가 중간에 shutdown 되는 현상이 있는데, spot instance때문이라는 의심을 하고 있음
+  - Spot instance fleets + Managed auto scaling로 변경 : 기존과 같이 spot instance를 사용하기 때문에 on-demand instance를 사용하는 것 보다는 안정성이 떨어지는 것은 맞습니다.
+    다만, 데이터 센터 내에 사용률이 적은 instance 종류들을 선별해서 할당될 확률을 높이고 빼앗길 확률을 최대한 낮추고자 fleeet instance를 사용하려고 하는 것입니다.
+    일배치 클러스터에서 몇 번 service outage 현상을 겪은 후에 4월부터 인기 없는(?) instance들로 구성하여 fleet instance를 적용해서 운영하고 있습니다.
+    현재까지는 안정적으로 운영되고 있습니다
+    [참고 자료](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet.html)
 
 ## Usage
 - zeppelin 접속은 해당 포트를 열기만 해도 됨.
