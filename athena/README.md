@@ -2,6 +2,7 @@
 
 - local에서 Athena JDBC driver를 통해 Athena에 접속가능
     - https://blog.jetbrains.com/datagrip/2018/05/25/using-aws-athena-from-intellij-based-ide/
+    - access 계정와 ap-south-1 처럼 위치만 있으면 됨.
 - S3의 데이터를 metadata catalog를 통해 데이터 구조를 이해하여, query할 수 있음
 - 아래와 같은 명령을 통해, metadata catalog의 database 안에 table을 생성하고, 해당 table을 S3의 파일과 연결가능. 아래 코드는 해당 S3파일의 데이터 구조가 어떻게 생겼는지 정의 함. 
 ```scala
