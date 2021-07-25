@@ -33,6 +33,14 @@ aws emr add-steps \
 --steps Type=Spark,Name="some task",ActionOnFailure=CONTINUE,Args=[--class,com.sample.TaskExample,s3://somelink/scala-jar-file.jar,some-java-args]
 ```
 
+```shell
+#!/bin/bash
+aws emr add-steps \
+--region ap-south-1 \
+--cluster-id j-someId \
+--steps Type=Spark,Name="some task",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,s3-path,py-file,arg1,arg2]
+```
+
 
 ### Pricing
 - On-demand
