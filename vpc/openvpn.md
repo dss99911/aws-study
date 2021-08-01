@@ -13,3 +13,10 @@ VPN에 연결하여, private ip로 접속하고 싶은 경우, EC2 b와 VPC가 �
 static IP addressing
 https://openvpn.net/vpn-server-resources/assigning-a-static-vpn-client-ip-address-to-a-user/
 
+
+private ip접속시 foxyproxy의 역할
+- ip forwarding을 해주는데,
+- open vpn에는 forwarding 되기 전의 url이 등록되어 있고,
+- 따라서, forwarding된 후의 ip로 직접 접속은 안되게 하는 것 같음
+
+
