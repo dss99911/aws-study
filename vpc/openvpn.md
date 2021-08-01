@@ -12,3 +12,4 @@ VPN에 연결하여, private ip로 접속하고 싶은 경우, EC2 b와 VPC가 �
 
 static IP addressing
 https://openvpn.net/vpn-server-resources/assigning-a-static-vpn-client-ip-address-to-a-user/
+
