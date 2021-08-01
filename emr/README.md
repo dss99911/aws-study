@@ -66,6 +66,23 @@ aws emr add-steps \
   - 클러스터의 요약 정보에 접속 방식 설명되어 있음
   ![img.png](img.png)
 
+- SSH tunneling
+  - https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-web-interfaces.html
+  - 제플린등의 port가 master node에 열려있지 않을 때, 22번 포트로 연결해서 제플린에 접속하는 방법임.
+  - 단순히 제플린등의 port를 security group inbound에 등록하면 접속이 가능하지만, 보안이 취약해지므로, VPN을 쓰거나, SSH tunneling을 통해 접속하는 것을 권장
+  - 아래의 ssh port forwarding으로, local의 임의의 8157포트로 들어오는 데이터를 master node의 22포트로 연결
+  ```shell
+  # -N Do not execute a remote command.  This is useful for just for-warding ports.
+  # -D Specifies a local ``dynamic'' application-level port forwarding.
+  ssh -i {key-path} -ND 8157 hadoop@ip-000-000-000-000.ap-south-1.compute.internal
+  ```
+  - foxyproxy를 통해, 브라우저에서 접속시, local의 8157포트로 forwarding시킴.
+  - 위의 두 설정을 하게 되면, foxy proxy에 의해, 마스터 노드의 특정 포트로 접속시, local의 8157포트로 전달하고, ssh port forwarding으로, 로컬의 8157포트로 들어온 데이터를 master node에 22포트로 접속하여, 8157포트로 전달하는 방식.
+
+
+## Instance Fleet
+- https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-fleet.html
+- cluster생성시 advanced option에서 설정 가능
 
 ## Error
 - The EC2 Security Groups [sg-03b6c0c37c0cecce8] contain one or more ingress rules to ports other than [22] which allow public access.
@@ -76,3 +93,5 @@ aws emr add-steps \
 - [x] EMR에서 S3 접속하기 (자신의 s3는 기본 role에 등록되어 있음)
 - [ ] glue를 통해, Hive로 sql쿼리해보기
 - [ ] Athena 를 통해, s3 데이터 접근 해보기
+
+
