@@ -18,7 +18,7 @@ https://openvpn.net/vpn-server-resources/assigning-a-static-vpn-client-ip-addres
 
 private ip접속시 foxyproxy의 역할
 - ip forwarding을 해주는데,
-- open vpn에는 forwarding 되기 전의 url이 등록되어 있고,
+- open vpn에는 forwarding 되기 전의 url이 등록되어 있고(추측.)
 - 따라서, forwarding된 후의 ip로 직접 접속은 안되게 하는 것 같음
 
 
