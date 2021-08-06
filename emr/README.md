@@ -24,6 +24,7 @@
 #### Add Steps
 - [Work with Steps Using the AWS CLI and Console](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html)
 - [Adding a Spark Step](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html)
+- [Create Spark Cluster by cli or java](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-launch.html)
 - 여러 step을 추가할 경우, 병렬로 시작이 되고, 순차처리가 안됨(airflow dag로 순차처리하도록 처리했음) 
 ```shell
 #!/bin/bash
@@ -40,6 +41,7 @@ aws emr add-steps \
 --cluster-id j-someId \
 --steps Type=Spark,Name="some task",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,s3-path,py-file,arg1,arg2]
 ```
+- ',' 값이 입력되어야 하면, \, 를 쓰면 됨.
 
 
 ### Pricing
