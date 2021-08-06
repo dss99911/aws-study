@@ -41,8 +41,20 @@ aws emr add-steps \
 --cluster-id j-someId \
 --steps Type=Spark,Name="some task",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,s3-path,py-file,arg1,arg2]
 ```
-- ',' 값이 입력되어야 하면, \, 를 쓰면 됨.
+- ',' 값이 입력되어야 하면, "A\,B" 를 쓰면 됨.
 
+```shell
+
+aws emr create-cluster \
+--name "$1" \
+--release-label emr-6.3.0 \
+--applications Name=Spark Name=Hadoop \
+--ec2-attributes KeyName={key-name} \
+--instance-type m4.large --instance-count 1 --use-default-roles \
+--steps Type=Spark,Name="$1",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,"s3://file.zip\,s3://file2.zip",s3://$1,live,$2] \
+--auto-terminate \
+--profile A
+```
 
 ### Pricing
 - On-demand
