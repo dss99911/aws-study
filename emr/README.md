@@ -24,6 +24,7 @@
 #### Add Steps
 - [Work with Steps Using the AWS CLI and Console](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html)
 - [Adding a Spark Step](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html)
+- [AWS EMR CLI Reference](https://docs.aws.amazon.com/cli/latest/reference/emr/create-cluster.html)
 - [Create Spark Cluster by cli or java](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-launch.html)
 - 여러 step을 추가할 경우, 병렬로 시작이 되고, 순차처리가 안됨(airflow dag로 순차처리하도록 처리했음) 
 ```shell
@@ -47,8 +48,10 @@ aws emr add-steps \
 
 aws emr create-cluster \
 --name "$1" \
+--region ap-south-1 \
 --release-label emr-6.3.0 \
---applications Name=Spark Name=Hadoop \
+--applications Name=Spark Name=Hadoop Name=Hive \
+--configurations file://./spark-configuration.json \
 --ec2-attributes KeyName={key-name} \
 --instance-type m4.large --instance-count 1 --use-default-roles \
 --steps Type=Spark,Name="$1",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,"s3://file.zip\,s3://file2.zip",s3://$1,live,$2] \
