@@ -58,6 +58,11 @@ aws emr create-cluster \
 --auto-terminate \
 --profile A
 ```
+- glue configuration설정을 아래와 같이 spark source code에서 해도 될듯?
+```python
+spark = SparkSession.builder.appName("PySparkApp")
+  .config("hive.metastore.client.factory.class", "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory")
+```
 
 ### Pricing
 - On-demand
