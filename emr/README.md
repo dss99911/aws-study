@@ -91,7 +91,7 @@ spark = SparkSession.builder.appName("PySparkApp")
 - SSH tunneling
   - https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-web-interfaces.html
   - 제플린등의 port가 master node에 열려있지 않을 때, 22번 포트로 연결해서 제플린에 접속하는 방법임.
-  - 단순히 제플린등의 port를 security group inbound에 등록하면 접속이 가능하지만, 보안이 취약해지므로, VPN을 쓰거나, SSH tunneling을 통해 접속하는 것을 권장
+  - 단순히 제플린등의 port를 security group inbound에 등록하면 접속이 가능하지만, 보안이 취약해지므로, VPN을 쓰거나, SSH tunneling을 통해 접속하는 것을 권장. aws console에서도 url이 tunneling하는 걸 가정하고, url을 공유해주고있고, hadoop cluster monitoring에서 redirect할 때도, 이 url로 되어 있음.
   - 아래의 ssh port forwarding으로, local의 임의의 8157포트로 들어오는 데이터를 master node의 22포트로 연결
   ```shell
   # -N Do not execute a remote command.  This is useful for just for-warding ports.
