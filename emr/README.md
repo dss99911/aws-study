@@ -100,6 +100,7 @@ spark = SparkSession.builder.appName("PySparkApp")
   ```
   - foxyproxy를 통해, 브라우저에서 접속시, local의 8157포트로 forwarding시킴.
   - 위의 두 설정을 하게 되면, foxy proxy에 의해, 마스터 노드의 특정 포트로 접속시, local의 8157포트로 전달하고, ssh port forwarding으로, 로컬의 8157포트로 들어온 데이터를 master node에 22포트로 접속하여, 8157포트로 전달하는 방식.
+  - vpn을 쓴다면, vpn에서 ssh tunnel용 url을 허용해주지 않으면, ssh tunneling을 못 씀.
 
 
 ## Instance Fleet
