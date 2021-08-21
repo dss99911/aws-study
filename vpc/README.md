@@ -1,35 +1,61 @@
 # AWS  VPC, subnet, region, AZ
 
 ![img.png](img.png)
+
+
+## Subnet
 VPC안에 subnet이 존재한다.
 
-EC2, RDS
+## CIDR
+- subnet의 ip address 할당 방식
+- 기존에는 network address와 host address로 구분하고, class A~E 까지의 클래스를 나눠서 ip address를 할다앟였는데, 유연성이 떨어져서, 별도의 ip address할당 방식을 사
+```
+198.168.32.0/24 198.168.32.0~198.168.32.255 = 256
+
+198.168.33.0/24 198.168.33.0~198.168.33.255 = 256
+
+198.168.34.0/24 198.168.34.0~198.168.34.255 = 256
+
+198.168.35.0/24 198.168.35.0~198.168.35.255 = 256
+
+198.168.32.0/22 198.168.32.0~198.168.35.255 = 1024(256*4)
+```
+- 위 4개의 할당 받은 subnet을 합쳐서, 묶는 것을 supernetting이라고 하고, `198.168.32.0/22`가 CIDR로 표현한 subnet의 대역폭. 22의 의미는 이진수 22개를 subnet으로 사용하고, subnet아래의 host들은 나머지 10개의 이진수로 할당 할 수 있게 함
+https://dev.classmethod.jp/articles/vpc-3/
+
+### public Subnet, private Subnet
+- https://aws.amazon.com/ko/premiumsupport/knowledge-center/rds-connectivity-instance-subnet-vpc/
+- public subnet에 있는 instance들은 public ip가 할당되어 접속이 가능
+
+
+##EC2, RDS
 - 특정 subnet에 속해있음
 - Network Interface와 연결되어 있어서, Network Interface의 IP address로 접속 가능
   EC2
 ![img_1.png](img_1.png)
 
-RDS
+##RDS
 ![img_2.png](img_2.png)
-ELB
+##ELB
 - 한 VPC안에 여러개의 subnet을 생성하고, network interface도 여러개 생성됨.
 - ![img_3.png](img_3.png)
 
-Network Interfaces
+##Network Interfaces
 - 하나의 subnet에 여러 Network Interface존재 가능
 - 하나의 보안 그룹 설정하여, In/Out bound 설정 가능
 ![img_5.png](img_5.png)
 
-탄력적 IP
+## 탄력적 IP(elastic ip)
 - Network Interface와 1:1대응(Network Interface는 탄력적 IP가 없을 수 있음
 - public IP와 1:1 대응함.
+- public ip는 동적 할당이라 바뀔 수 있는데, elastic ip는 정적으로 고정된 ip
 
-보안그룹
+## 보안그룹
 -  VPC에 속함
 ![img_4.png](img_4.png)
 
 
-Region
+## Region
 - 지리적 분리된 것
   Availability Zone
 - isolated location within each Region
