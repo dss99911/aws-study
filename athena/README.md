@@ -49,6 +49,16 @@ def createTableFromFile(filePath: String, tableName: String) = {
 - Data scan limits : 1TB
 - Data scan notification limits : 1TB per 1hour (the limit for the maximum amount of data queries are allowed to scan within a specific period.)
 - 슬랙등과 연동해서, cloudwatch를 통해서 athena 알람을 받을 수 있음.
+## Partition Projection
+- https://docs.aws.amazon.com/athena/latest/ug/partition-projection.html
+- glue에서 partition정보를 매번 가져오지 않고, 파티션정보를 in-memory에 가지고 있다가, partition pruning을 제공.
+- EMR, Redshift에서는 glue에서는 제공되지 않는 기능
+- EMR에서 동일한 sql 쿼리를 해도, Athena에서는 결과가 금방 나오는 반면, EMR에서는 에러가 날 때도 있음
+
+### Dynamic ID Partitioning
+- user id처럼 고정된 파티션이 아니고, 엄청나게 많은 값이 존재할 경우의, 파티셔닝
+- `injection`과 `bucketing` 방식을 제공함.
+
 
 ## Performance Tuning
 

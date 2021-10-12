@@ -26,6 +26,8 @@
 - [Adding a Spark Step](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html)
 - [AWS EMR CLI Reference](https://docs.aws.amazon.com/cli/latest/reference/emr/create-cluster.html)
 - [Create Spark Cluster by cli or java](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-launch.html)
+- [zsh bug](https://github.com/Alluxio/alluxio/issues/10595)
+  - use /bin/bash instead of zsh
 - 여러 step을 추가할 경우, 병렬로 시작이 되고, 순차처리가 안됨(airflow dag로 순차처리하도록 처리했음) 
 ```shell
 #!/bin/bash
