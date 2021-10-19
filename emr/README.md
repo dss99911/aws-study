@@ -50,13 +50,17 @@ aws emr add-steps \
 
 aws emr create-cluster \
 --name "$1" \
+--log-uri "s3://bucket/$PY_NAME" \
 --region ap-south-1 \
 --release-label emr-6.3.0 \
---applications Name=Spark Name=Hadoop Name=Hive \
+--applications Name=Spark Name=Hadoop Name=Hive Name=Ganglia \
 --configurations file://./spark-configuration.json \
---ec2-attributes KeyName={key-name} \
+--ec2-attributes KeyName=key-name,SubnetId=subnet-12333 \
+--use-default-roles \
 --instance-type m4.large --instance-count 1 --use-default-roles \
+# --instance-fleets InstanceFleetType=MASTER,TargetOnDemandCapacity=1,InstanceTypeConfigs=['{InstanceType=m5.2xlarge}'] InstanceFleetType=CORE,TargetOnDemandCapacity=10,InstanceTypeConfigs=['{InstanceType=m5.xlarge}'] InstanceFleetType=TASK,TargetSpotCapacity=45,InstanceTypeConfigs=['{InstanceType=m5.2xlarge}'] \
 --steps Type=Spark,Name="$1",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,"s3://file.zip\,s3://file2.zip",s3://$1,live,$2] \
+#--steps Type=Spark,Name="$PY_NAME",ActionOnFailure=CONTINUE,Args=[--py-files,"s3://bucket/python.zip\,s3://bucket/packages.zip",s3://bucket/$PY_NAME,live,$P1] \
 --auto-terminate \
 --profile A
 ```
