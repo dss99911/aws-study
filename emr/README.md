@@ -114,9 +114,14 @@ spark = SparkSession.builder.appName("PySparkApp")
   - delete the existing security groups. EMR seems to use existing security groups which is created by other EMR cluster.
   - zeppelin 접속을 위해서, inbound에 8890 포트를 열어서 그런건가?
   - ![img_1.png](img_1.png) 에서 8890을 허용해주면, security group에 8890 port를 추가했어도, 이후 cluster생성시 정상 작동하지 않을까?
+- Ganglia forbidden error
+  - call `sudo service httpd reload` on ssh
+  - https://stackoverflow.com/questions/66064641/aws-emr-ganglia-dashboard-not-accessible-403-forbidden
 
 - [x] EMR에서 S3 접속하기 (자신의 s3는 기본 role에 등록되어 있음)
 - [ ] glue를 통해, Hive로 sql쿼리해보기
 - [ ] Athena 를 통해, s3 데이터 접근 해보기
 
+# Performance tuning
+- https://aws.amazon.com/blogs/big-data/best-practices-for-successfully-managing-memory-for-apache-spark-applications-on-amazon-emr/
 
