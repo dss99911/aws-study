@@ -94,11 +94,20 @@ spark = SparkSession.builder.appName("PySparkApp")
   - 클러스터의 요약 정보에 접속 방식 설명되어 있음
   ![img.png](img.png)
 
-- SSH tunneling
+# SSH tunneling
+## 방법
+- master node 22번 포트 열기
+- 아래 shell script로 port forwarding 
+```
+ssh -i {key-path} -ND 8157 hadoop@ip-000-000-000-000.ap-south-1.compute.internal
+```
+- foxyproxy로 8157 포트에 스크립트 설정 [code](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-connect-master-node-proxy.html)
+
+## 설명
   - https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-web-interfaces.html
-  - 제플린등의 port가 master node에 열려있지 않을 때, 22번 포트로 연결해서 제플린에 접속하는 방법임.
-  - 단순히 제플린등의 port를 security group inbound에 등록하면 접속이 가능하지만, 보안이 취약해지므로, VPN을 쓰거나, SSH tunneling을 통해 접속하는 것을 권장. aws console에서도 url이 tunneling하는 걸 가정하고, url을 공유해주고있고, hadoop cluster monitoring에서 redirect할 때도, 이 url로 되어 있음.
-  - 아래의 ssh port forwarding으로, local의 임의의 8157포트로 들어오는 데이터를 master node의 22포트로 연결
+    - 제플린등의 port가 master node에 열려있지 않을 때, 22번 포트로 연결해서 제플린에 접속하는 방법임.
+    - 단순히 제플린등의 port를 security group inbound에 등록하면 접속이 가능하지만, 보안이 취약해지므로, VPN을 쓰거나, SSH tunneling을 통해 접속하는 것을 권장. aws console에서도 url이 tunneling하는 걸 가정하고, url을 공유해주고있고, hadoop cluster monitoring에서 redirect할 때도, 이 url로 되어 있음.
+    - 아래의 ssh port forwarding으로, local의 임의의 8157포트로 들어오는 데이터를 master node의 22포트로 연결
   ```shell
   # -N Do not execute a remote command.  This is useful for just for-warding ports.
   # -D Specifies a local ``dynamic'' application-level port forwarding.
@@ -122,10 +131,59 @@ spark = SparkSession.builder.appName("PySparkApp")
   - call `sudo service httpd reload` on ssh
   - https://stackoverflow.com/questions/66064641/aws-emr-ganglia-dashboard-not-accessible-403-forbidden
 
-- [x] EMR에서 S3 접속하기 (자신의 s3는 기본 role에 등록되어 있음)
-- [ ] glue를 통해, Hive로 sql쿼리해보기
-- [ ] Athena 를 통해, s3 데이터 접근 해보기
+- Failed to authorize instance profile EMR_EC2_DefaultRole
+  - https://aws.amazon.com/ko/premiumsupport/knowledge-center/emr-default-role-invalid/
+- Access
+  - AmazonElasticMapReduceFullAccess
+  - AmazonEMRFullAccessPolicy_v2
+
+### EC2 instance count limit
+need to request to increase the limit 
+- https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LimitsCalculator:
+
+### EC2 instance type not supported
+check if the instance type is supported on the subnet 
+```shell
+aws ec2 run-instances --instance-type m4.large --dry-run --image-id ami-23232323 --subnet-id subnet-123344
+```
+
+find ami id
+```shell
+aws ec2 describe-images --owners self amazon
+```
+
 
 # Performance tuning
 - https://aws.amazon.com/blogs/big-data/best-practices-for-successfully-managing-memory-for-apache-spark-applications-on-amazon-emr/
 
+# docker
+https://github.com/awslabs/aws-data-wrangler/blob/main/tutorials/016%20-%20EMR%20%26%20Docker.ipynb
+- 권한 설정
+  - aws cli credential에 아래 권한 추가
+    - AmazonElasticMapReduceFullAccess
+    - AmazonEMRFullAccessPolicy_v2
+  - EMR_EC2_DefaultRole 또는 해당 role을 상속하는 role에 아래 권한 추가
+    - Elastic Container Registry access
+- untagged 자동 삭제
+  - Lifecycle Policy 라는 걸 설정 하면, untagged 자동 삭제 가능
+  - https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html
+
+
+## emr log 보는 방법
+- docker의 경우, stderr에 에러가 보여지지 않는다.
+```
+Exception in thread "main" org.apache.spark.SparkException: Application application_1637389041390_0002 finished with failed status
+	at org.apache.spark.deploy.yarn.Client.run(Client.scala:1253)
+	at org.apache.spark.deploy.yarn.YarnClusterApplication.start(Client.scala:1645)
+	at org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:959)
+	at org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:180)
+	at org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:203)
+	at org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:90)
+	at org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1047)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1056)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+Command exiting with ret '1'
+```
+- s3에 저장되는 log를 확인하기
+  - 위의 에러에 보면, `application_1637389041390_0002`라는 spark application에서 에러가 났다고 뜸
+  - {해당 cluster id} -> "containers" -> {spark-application-id} -> stdout.gz 확인
