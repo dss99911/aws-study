@@ -187,3 +187,5 @@ Command exiting with ret '1'
 - s3에 저장되는 log를 확인하기
   - 위의 에러에 보면, `application_1637389041390_0002`라는 spark application에서 에러가 났다고 뜸
   - {해당 cluster id} -> "containers" -> {spark-application-id} -> stdout.gz 확인
+- yarn등의 resource manager에서 확인하기
+  - 해당 application에 들어가면, stdout 로그를 확인 가능 
