@@ -57,6 +57,7 @@ aws emr create-cluster \
 --configurations file://./spark-configuration.json \
 --ec2-attributes KeyName=key-name,SubnetId=subnet-12333 \
 --use-default-roles \
+--bootstrap-actions Path="s3://mybucket/bootstrap.sh",Args=[0,1] \
 --instance-type m4.large --instance-count 1 --use-default-roles \
 # --instance-fleets InstanceFleetType=MASTER,TargetOnDemandCapacity=1,InstanceTypeConfigs=['{InstanceType=m5.2xlarge}'] InstanceFleetType=CORE,TargetOnDemandCapacity=10,InstanceTypeConfigs=['{InstanceType=m5.xlarge}'] InstanceFleetType=TASK,TargetSpotCapacity=45,InstanceTypeConfigs=['{InstanceType=m5.2xlarge}'] \
 --steps Type=Spark,Name="$1",ActionOnFailure=CONTINUE,Args=[--packages,io.delta:delta-core_2.12:0.8.0,--py-files,"s3://file.zip\,s3://file2.zip",s3://$1,live,$2] \
