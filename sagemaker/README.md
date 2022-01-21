@@ -7,3 +7,13 @@
 
 ## Auto scaling
 - instance 시작하는데 시간이 걸리므로, 저사양을 여러개 하는게 좋음. 저사양이므로, 증가 조건을 낮게 설정할 수 있고, 이에 따라 점진적 증대 가능.
+
+## Spark
+https://github.com/aws/sagemaker-spark/blob/master/README.md
+- pip install sagemaker_pyspark
+- 
+https://docs.aws.amazon.com/sagemaker/latest/dg/apache-spark.html
+
+
+## Pricing
+https://aws.amazon.com/ko/sagemaker/pricing/
