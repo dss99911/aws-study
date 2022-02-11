@@ -134,9 +134,21 @@ ssh -i {key-path} -ND 8157 hadoop@ip-000-000-000-000.ap-south-1.compute.internal
 
 - Failed to authorize instance profile EMR_EC2_DefaultRole
   - https://aws.amazon.com/ko/premiumsupport/knowledge-center/emr-default-role-invalid/
-- Access
-  - AmazonElasticMapReduceFullAccess
-  - AmazonEMRFullAccessPolicy_v2
+  - Access
+    - AmazonElasticMapReduceFullAccess
+    - AmazonEMRFullAccessPolicy_v2
+- com.amazonaws.SdkClientException: Unable to execute HTTP request: Timeout waiting for connection from pool
+  - https://aws.amazon.com/ko/premiumsupport/knowledge-center/emr-timeout-connection-wait/
+  - need to increase max connection count
+  - SageMaker에서 에러 발생한 경우, 해결방법은 못 찾음.p
+```
+{
+      "Classification": "emrfs-site",
+      "Properties": {
+        "fs.s3.maxConnections": "100",
+      }
+}  
+```
 
 ### EC2 instance count limit
 need to request to increase the limit 
