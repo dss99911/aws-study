@@ -14,3 +14,13 @@
 
 ## 람다로 EMR호출하기
 https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/launch-a-spark-job-in-a-transient-emr-cluster-using-a-lambda-function.html
+
+
+## 설정
+- 안 쓰고 있어도, 최소 1개의 인스턴스는 켜놓을지, 꺼 놓을지 설정할 수 있음.
+- 최대 병령 호출 가능 갯수가 제한 되어 있고, 요청을 통해 계정당 제한을 늘릴 수 있음
+
+
+## cold start
+https://aws.amazon.com/ko/blogs/korea/new-provisioned-concurrency-for-lambda-functions/
+https://alphahackerhan.tistory.com/29 
