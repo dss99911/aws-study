@@ -12,3 +12,9 @@ aws configure
 aws configure --profile {profile-name}
 
 aws {somemethod} --profile {profile-name}
+
+
+#use profile
+aws some-service --profile hyun
+#use region
+aws some-service --region ap-south-1
