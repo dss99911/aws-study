@@ -11,6 +11,7 @@
 - Master Node : 모든 작업을 관리
 - Core Node : 테스크 처리 및 HDFS에 저장 (if multi-node, requires at least one)
 - Task Node : 테스크만 처리.(optional)
+  - 연산량이 많아 메모리에서만 처리되는게 많은 경우.
 
 ### 작업 제출 방법
 - Cluster를 생성할 때, step들을 모두 정의하는 방법
