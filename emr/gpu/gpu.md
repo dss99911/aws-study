@@ -1,0 +1,2 @@
+- https://nvidia.github.io/spark-rapids/docs/get-started/getting-started-aws-emr.html
+- https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-rapids.html
