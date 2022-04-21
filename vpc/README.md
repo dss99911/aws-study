@@ -44,6 +44,8 @@ https://dev.classmethod.jp/articles/vpc-3/
 - 하나의 subnet에 여러 Network Interface존재 가능
 - 하나의 보안 그룹 설정하여, In/Out bound 설정 가능
 ![img_5.png](img_5.png)
+- https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-services-overview.html
+  - VPC외부의 서비스와 private하게 연결할 수 있음
 
 ## 탄력적 IP(elastic ip)
 - Network Interface와 1:1대응(Network Interface는 탄력적 IP가 없을 수 있음
