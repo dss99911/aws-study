@@ -4,6 +4,7 @@
 # need permision of logs.CreateExportTask
 # https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3ExportTasks.html
 #   - need to change s3 bucket policy for logs service to access s3(refer step3)
+# 로그가 s3에 저장되는데 시간 걸림.
 aws logs create-export-task \
   --task-name 'test' \
   --log-group-name "/aws/lambda/test" \
@@ -15,9 +16,17 @@ aws logs create-export-task \
   --region ap-south-1
 
 # just show logs. it has limit. and also shows the log by json format. so difficult to see the log
+# https://docs.aws.amazon.com/cli/latest/reference/logs/get-log-events.html
 aws logs get-log-events \
   --log-group-name "/aws/lambda/test" \
   --log-stream-name '2021/09/12/[$LATEST]8cc82343d7d64d7d93040c4d44e47664' \
   --start-time 1441490400000 \
   --end-time 1641494000000 \
   --region ap-south-1
+
+
+# find log stream name
+aws logs describe-log-streams \
+--log-group-name "/aws/sagemaker/ProcessingJobs" \
+--log-stream-name-prefix 'pipelines-xxxxx' \
+--region ap-south-1

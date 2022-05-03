@@ -170,18 +170,6 @@ aws ec2 describe-images --owners self amazon
 # Performance tuning
 - https://aws.amazon.com/blogs/big-data/best-practices-for-successfully-managing-memory-for-apache-spark-applications-on-amazon-emr/
 
-# docker
-https://github.com/awslabs/aws-data-wrangler/blob/main/tutorials/016%20-%20EMR%20%26%20Docker.ipynb
-- 권한 설정
-  - aws cli credential에 아래 권한 추가
-    - AmazonElasticMapReduceFullAccess
-    - AmazonEMRFullAccessPolicy_v2
-  - EMR_EC2_DefaultRole 또는 해당 role을 상속하는 role에 아래 권한 추가
-    - Elastic Container Registry access
-- untagged 자동 삭제
-  - Lifecycle Policy 라는 걸 설정 하면, untagged 자동 삭제 가능
-  - https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html
-
 
 ## emr log 보는 방법
 - docker의 경우, stderr에 에러가 보여지지 않는다.
