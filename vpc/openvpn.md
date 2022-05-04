@@ -21,4 +21,6 @@ private ip접속시 foxyproxy의 역할
 - open vpn에는 forwarding 되기 전의 url이 등록되어 있고(subnet만 같아도 open vpn적용 되게 가능하거나, 등록이 필요없는듯..?)
 - 따라서, forwarding된 후의 ip로 직접 접속은 안되게 하는 것 같음
 
-
+private domain name을 허용하는 방법(?)
+- private domain name을 추가하는 방법: https://openvpn.net/cloud-docs/adding-private-domain-name-route-to-network/
+- custom dns server를 설정하는 방법: https://openvpn.net/cloud-docs/changing-dns-servers/

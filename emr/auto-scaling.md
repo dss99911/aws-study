@@ -11,3 +11,4 @@
   - instance type을 core나 task에 여러개 설정하기 위해서는 instance fleet으로 각 instance type별 weight를 지정해주면 되는 듯
 
 ## Custom automatic scaling
+https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-automatic-scaling.html
