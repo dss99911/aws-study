@@ -117,14 +117,26 @@ ssh -i {key-path} -ND 8157 hadoop@ip-000-000-000-000.ap-south-1.compute.internal
   ```
   - foxyproxy를 통해, 브라우저에서 접속시, local의 8157포트로 forwarding시킴.
   - 위의 두 설정을 하게 되면, foxy proxy에 의해, 마스터 노드의 특정 포트로 접속시, local의 8157포트로 전달하고, ssh port forwarding으로, 로컬의 8157포트로 들어온 데이터를 master node에 22포트로 접속하여, 8157포트로 전달하는 방식.
-  - vpn을 쓴다면, vpn에서 ssh tunnel용 url을 허용해주지 않으면, ssh tunneling을 못 씀.
+  - vpn을 쓴다면, ssh tunneling에서 hostname이 아닌 ip address를 넣어주고, foxyproxy에서 hostname으로 들어오는 요청을 해당 ip address로 redirect
+  - 만약 여러 ip에 접속이 필요하다면, ip마다 다른 port로 ssh tunneling해줘야 하는 불편함.
+
+# private dns 접속하기
+- https://serverfault.com/a/265396
+ip-000-000-000-000.ap-south-1.compute.internal 로 된 url접속할 때,
+VPN을 통해 private instance에 접근시,
+VPN에서 private dns server를 추가해주지 않으면 사용 불가능.
+이 때, 임시로, [access_private_dns.py](access_private_dns.py)를 통해, 해당 hostname의 경우, ip주소를 리턴시키도록 처리.
+- dns server설정, launchd 설정 등 할게 많고, 안정성, 성능 검증되지 않음.
+## 다른 방법
+- VPN에서 private dns server 추가 (openvpn 문서 참조)
+- etc/hosts에 각각의 ip를 하나하나 추가(emr cluster는 task노드의 경우 매번 바뀌기 때문에 제한적)
 
 
-## Instance Fleet
+# Instance Fleet
 - https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-fleet.html
 - cluster생성시 advanced option에서 설정 가능
 
-## Error
+# Error
 - The EC2 Security Groups [sg-03b6c0c37c0cecce8] contain one or more ingress rules to ports other than [22] which allow public access.
   - delete the existing security groups. EMR seems to use existing security groups which is created by other EMR cluster.
   - zeppelin 접속을 위해서, inbound에 8890 포트를 열어서 그런건가?
@@ -151,11 +163,11 @@ ssh -i {key-path} -ND 8157 hadoop@ip-000-000-000-000.ap-south-1.compute.internal
 }  
 ```
 
-### EC2 instance count limit
+## EC2 instance count limit
 need to request to increase the limit 
 - https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LimitsCalculator:
 
-### EC2 instance type not supported
+## EC2 instance type not supported
 check if the instance type is supported on the subnet 
 ```shell
 aws ec2 run-instances --instance-type m4.large --dry-run --image-id ami-23232323 --subnet-id subnet-123344
