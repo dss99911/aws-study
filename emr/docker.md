@@ -18,6 +18,33 @@ https://github.com/awslabs/aws-data-wrangler/blob/main/tutorials/016%20-%20EMR%2
 
 - 실행
   - spark-default에 추가하면, conf설정 안해줘도 됨
+```shell
+{
+    "Classification":"container-executor",
+    "Properties":{
+
+    },
+    "Configurations":[
+      {
+        "Classification": "docker",
+        "Properties": {
+          "docker.trusted.registries": "local,centos,111.dkr.ecr.ap-south-1.amazonaws.com",
+          "docker.privileged-containers.registries": "local,centos,111.dkr.ecr.ap-south-1.amazonaws.com"
+        }
+      }
+    ]
+},
+{
+    "Classification": "spark-defaults",
+    "Properties": {
+      "spark.executorEnv.YARN_CONTAINER_RUNTIME_TYPE":"docker",
+      "spark.executorEnv.YARN_CONTAINER_RUNTIME_DOCKER_IMAGE":"111.dkr.ecr.ap-south-1.amazonaws.com/repo-name",
+      "spark.yarn.appMasterEnv.YARN_CONTAINER_RUNTIME_TYPE":"docker",
+      "spark.yarn.appMasterEnv.YARN_CONTAINER_RUNTIME_DOCKER_IMAGE":"111.dkr.ecr.ap-south-1.amazonaws.com/repo-name"
+    }
+},
+
+```
   - deploy-mode cluster에서만 작동함
     - https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.0/running-spark-applications/content/running_spark_in_docker_containers_on_yarn.html
     - pyspark-shell에서는 작동 안함

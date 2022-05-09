@@ -13,6 +13,8 @@ aws configure --profile {profile-name}
 
 aws {somemethod} --profile {profile-name}
 
+#여러 명령어에 다른 profile을 사용하고 싶은 경우.
+export AWS_PROFILE=user1
 
 #use profile
 aws some-service --profile hyun
