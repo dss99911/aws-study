@@ -1,0 +1,58 @@
+[
+  {
+    "Classification": "yarn-site",
+    "Properties": {
+      "yarn.nodemanager.vmem-check-enabled": "false",
+      "yarn.nodemanager.pmem-check-enabled": "false"
+    }
+  },
+  {
+    "Classification": "spark",
+    "Properties": {
+      "maximizeResourceAllocation": "true"
+    }
+  },
+  {
+    "Classification": "hive-site",
+    "Properties": {
+      "hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+    },
+    "Configurations": []
+  },
+  {
+    "Classification": "spark-hive-site",
+    "Properties": {
+      "hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+    },
+    "Configurations": []
+  },
+  {
+    "Classification": "spark-defaults",
+    "Properties": {
+      "spark.executor.defaultJavaOptions": "-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:OnOutOfMemoryError='kill -9 %p' -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=70 -XX:MaxHeapFreeRatio=70 -XX:+CMSClassUnloadingEnabled",
+      "spark.driver.defaultJavaOptions": "-XX:OnOutOfMemoryError='kill -9 %p' -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=70 -XX:MaxHeapFreeRatio=70 -XX:+CMSClassUnloadingEnabled",
+      "spark.yarn.stagingDir": "hdfs:///tmp",
+      "spark.yarn.preserve.staging.files": "true",
+      "spark.kryoserializer.buffer.max": "2000M",
+      "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
+      "spark.driver.maxResultSize": "0",
+      "spark.jars.packages": "com.johnsnowlabs.nlp:spark-nlp_2.12:3.4.3"
+    }
+  },
+  {
+    "Classification": "spark-env",
+    "Configurations": [{
+      "Classification": "export",
+      "Properties": {
+        "PYSPARK_PYTHON": "/usr/bin/python3"
+      }
+    }]
+  },
+  {
+    "Classification": "livy-conf",
+    "Properties": {
+      "livy.spark.deploy-mode": "client"
+    },
+    "Configurations": []
+  }
+]
