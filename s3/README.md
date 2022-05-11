@@ -9,3 +9,15 @@
 ### Storage Class Analysis
 - bucket의 metrics 탭에서 확인 가능
 - Create analytics configuration를 통해, 특정 prefix의 storage class별 사용량, 조회량등을 확인할 수 있음
+
+
+### s3fs
+- mount해서, 실제 File system인 것 처럼 사용.
+- spark에서 s3에 바로 접근할 수 있는 이유가 이것.
+- https://github.com/s3fs-fuse/s3fs-fuse
+- goofys가 속도가 더 빠르다고 함. emr studio에서도 선택할 수 있음
+  - https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-studio-magics.html
+  ```shell
+  sudo wget https://github.com/kahing/goofys/releases/latest/download/goofys -P /usr/bin/
+  sudo chmod ugo+x /usr/bin/goofys
+  ```
