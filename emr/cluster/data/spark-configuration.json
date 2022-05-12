@@ -36,7 +36,10 @@
       "spark.kryoserializer.buffer.max": "2000M",
       "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
       "spark.driver.maxResultSize": "0",
-      "spark.jars.packages": "com.johnsnowlabs.nlp:spark-nlp_2.12:3.4.3"
+      "spark.jars.packages": "com.johnsnowlabs.nlp:spark-nlp_2.12:3.4.3",
+      "spark.pyspark.virtualenv.enabled": "true",
+      "spark.pyspark.virtualenv.type":"native",
+      "spark.pyspark.virtualenv.bin.path":"/usr/bin/virtualenv"
     }
   },
   {
