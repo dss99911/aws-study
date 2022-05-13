@@ -12,6 +12,7 @@ aws s3 cp data/initialization.py s3://$BUCKET/emr/$CLUSTER_NAME/initialization.p
 aws s3 cp data/zeppelin-site.xml s3://$BUCKET/emr/$CLUSTER_NAME/zeppelin-site.xml
 aws s3 cp data/interpreter.json s3://$BUCKET/emr/$CLUSTER_NAME/interpreter.json
 aws s3 cp data/shiro.ini s3://$BUCKET/emr/$CLUSTER_NAME/shiro.ini
+aws s3 cp data/spark-defaults-livy.conf s3://$BUCKET/emr/$CLUSTER_NAME/spark-defaults-livy.conf
 
 aws emr create-cluster \
 --region ap-south-1 \

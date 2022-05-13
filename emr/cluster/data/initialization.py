@@ -46,7 +46,7 @@ def configure_zeppelin():
 
 def configure_livy():
     # livy ignore pyFiles on spark-conf/spark-defaults,
-    os.system("sudo cp /etc/spark/conf.dist/spark-defaults.conf /etc/livy/conf.dist/spark-defaults.conf")
+    os.system("sudo aws s3 cp spark-defaults-livy.conf /etc/livy/conf.dist/spark-defaults.conf")
 
 
 if __name__ == '__main__':
