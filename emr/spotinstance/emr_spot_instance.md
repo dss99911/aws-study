@@ -1,5 +1,6 @@
 # Spot instance
 - 가격은 싸지만, 중간에 인스턴스가 반환되어, 작업 중 이던게 사라질 수 있음
+- https://docs.aws.amazon.com/whitepapers/latest/cost-optimization-leveraging-ec2-spot-instances/cost-optimization-leveraging-ec2-spot-instances.html
 
 ## 작업상 고려사항
 - task를 작게 분할하여, 큰 작업이 도중에 중단되지 않게 하기
@@ -22,3 +23,6 @@
 - 기본 instance 수는 작게 하고, ManagedScalingPolicy로 MaximumCapacityUnits 설정하여, provisioning을 빨리 할 수 있게 한다.
 - bid 비율은 50%로
 - core 갯수로, ebs 갯수 및, capacity weight설정
+
+## monitoring
+- 인스턴스가 꺼져서,취소된 task가 얼마나 되는지는 spark UI를 보면 될 듯
