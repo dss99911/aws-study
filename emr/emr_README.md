@@ -202,4 +202,21 @@ Command exiting with ret '1'
   - 위의 에러에 보면, `application_1637389041390_0002`라는 spark application에서 에러가 났다고 뜸
   - {해당 cluster id} -> "containers" -> {spark-application-id} -> stdout.gz 확인
 - yarn등의 resource manager에서 확인하기
-  - 해당 application에 들어가면, stdout 로그를 확인 가능 
+  - 해당 application에 들어가면, stdout 로그를 확인 가능
+
+
+# 권한 설정
+- https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html
+- https://docs.aws.amazon.com/ko_kr/emr/latest/ManagementGuide/emr-managed-iam-policies.html#manually-tagged-resources
+## Sagemaker 스텝에서 emr 클러스터 실행권한
+- AmazonSageMaker-ExecutionRole-2222 에 AmazonEMRFullAccessPolicy_v2 권한을 추가
+- AmazonEMRFullAccessPolicy_v2 에는 EMR_EC2_DefaultRole에 대한 PassRole권한은 있지만, EMR_DefaultRole 에 대한 권한은 없고, 이로인해 에러 발생. AmazonSageMaker-ExecutionRole-2222 권한에 아래 추가하기
+```json
+{
+            "Sid": "PassRoleForEMRDefault",
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::*:role/EMR_DefaultRole"
+        }
+```
+- Sagemaker step의 processor에 "for-use-with-amazon-emr-managed-policies": "true" 태그 추가해서 ec2가 해당 태그를 통해서, emr cluster를 생성가능하도록 한다. 

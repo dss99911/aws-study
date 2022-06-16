@@ -8,4 +8,4 @@
 
 - [ ] [Dynamic Frame](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-dynamic-frame.html)
     - similar to Dataframe but self-describing
-    - dynamo db에 저장할 때 씀
+    - glue context를통해 dynamo db에 저장할 때도 사용.
