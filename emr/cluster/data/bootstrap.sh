@@ -31,4 +31,9 @@ sudo pip3 install --upgrade pip
 
 sudo pip3 install -U awswrangler pandas matplotlib requests beautifulsoup4 pyarrow scikit-learn 
 
+# link /home to mount. (No space left on device)
+sudo cp -rp /home /mnt/
+sudo rm -r /home
+sudo ln -s /mnt/home /home
+
 set +x
