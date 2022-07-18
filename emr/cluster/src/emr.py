@@ -5,7 +5,7 @@ from cheapest_spot_instance_retriever import get_cheapest_instance_types
 import json
 
 _region = "ap-south-1"
-_emr_release_ver = "emr-6.6.0"
+_emr_release_ver = "emr-6.7.0"
 _subnet_id = "subnet-1"
 _key_pair_name = "hyun"
 _tags = {"Service": "cluster", "Application": "emr"}
