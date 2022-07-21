@@ -21,7 +21,7 @@ def get_cheapest_instance_types(region, available_categories=None, max_frequency
     """
     df_spot = get_spot_instance_data(region)
     df_spot = df_spot[
-        df_spot["emr"]
+        (df_spot["emr"] | is_in_categories(df_spot, ["g"])) # g is supported on https://aws.amazon.com/emr/pricing/
         & ((df_spot["frequency_interrupt"] <= max_frequency) if max_frequency else True)  # average value in month
         & ((df_spot["ram_gb"] / df_spot["cores"] >= min_ram) if min_ram else True)
         & ((df_spot["cores"] >= min_cores) if min_cores else True)

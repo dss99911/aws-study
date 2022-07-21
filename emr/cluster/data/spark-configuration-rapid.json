@@ -63,7 +63,7 @@
       "spark.kryo.registrator": "com.nvidia.spark.rapids.GpuKryoRegistrator",
       "spark.serializer": "org.apache.spark.serializer.KryoSerializer",
       "spark.driver.maxResultSize": "0",
-      "spark.jars.packages": "com.johnsnowlabs.nlp:spark-nlp_2.12:3.4.3,com.microsoft.azure:synapseml_2.12:0.9.5"
+      "spark.jars.packages": "com.johnsnowlabs.nlp:spark-nlp-gpu_2.12:4.0.2,com.microsoft.azure:synapseml_2.12:0.10.0"
     }
   },
   {
@@ -94,5 +94,12 @@
         "PYSPARK_PYTHON": "/usr/bin/python3"
       }
     }]
+  },
+  {
+    "Classification": "livy-conf",
+    "Properties": {
+      "livy.spark.deploy-mode": "client"
+    },
+    "Configurations": []
   }
 ]
