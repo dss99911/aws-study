@@ -1,6 +1,6 @@
+from pyspark.sql import SparkSession
 import os
 import sys
-
 
 def main(bucket, cluster_name, gpu, do_test):
     spark = initialize_spark(do_test)
