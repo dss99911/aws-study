@@ -3,7 +3,7 @@ import os
 import sys
 
 def main(bucket, cluster_name, gpu, do_test):
-    spark = initialize_spark(do_test)
+    spark = initialize_spark()
     configure_python()
     configure_zeppelin(bucket, cluster_name)
     configure_livy(bucket, cluster_name)
@@ -11,11 +11,10 @@ def main(bucket, cluster_name, gpu, do_test):
         test(spark, bucket, cluster_name, gpu)
 
 
-def initialize_spark(do_test):
+def initialize_spark():
     # at first spark initialization, download libraries. and it takes long time.
     return (
         SparkSession.builder.appName("initialization")
-        .config("hive.metastore.client.factory.class", "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory")
         .enableHiveSupport()
         .getOrCreate()
     )
@@ -62,7 +61,7 @@ def configure_livy(bucket, cluster_name):
 
 
 def test(spark, bucket, cluster_name, gpu):
-    test_pandas_udf(spark)
+    test_pandas(spark)
     test_torch(spark, gpu)
     test_nlp(gpu)
     if gpu == 'true':
@@ -70,7 +69,7 @@ def test(spark, bucket, cluster_name, gpu):
     test_livy()
 
 
-def test_pandas_udf(spark):
+def test_pandas(spark):
     from pyspark.sql.functions import pandas_udf
     import pandas as pd
 
@@ -83,6 +82,12 @@ def test_pandas_udf(spark):
         return v.mean()
 
     print(df.groupby("id").agg(mean_udf(df['v'])).collect())
+
+    pdf = pd.DataFrame(np.random.rand(100, 3))
+    df = spark.createDataFrame(pdf)
+    result_pdf = df.select("*").toPandas()
+    print("Pandas DataFrame result statistics:\n%s\n" % str(result_pdf.describe()))
+
 
 
 def test_torch(spark, gpu):

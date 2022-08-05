@@ -42,6 +42,7 @@
   {
     "Classification":"spark-defaults",
     "Properties":{
+      "spark.sql.execution.arrow.pyspark.enabled":"true",
       "spark.plugins":"com.nvidia.spark.SQLPlugin",
       "spark.sql.sources.useV1SourceList":"",
       "spark.executor.resource.gpu.discoveryScript":"/usr/lib/spark/scripts/gpu/getGpusResources.sh",
