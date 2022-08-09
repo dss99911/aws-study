@@ -64,3 +64,9 @@ https://dev.classmethod.jp/articles/vpc-3/
 - 어떤 문제가 발생해도,  격리되어 있어서, 특정 위치의 인스턴스에 문제가 발생해도, 다른 인스턴스에 영향이 가지 않게 물리적으로 처리해둔 영역
 - 분산 시스템에서는 특정 한 노드에 문제가 발생할 경우, 다른 노드들 만으로도 돌아갈 수 있게 처리를 하는데, 보통 속도를 빠르게 하기 위해, 같은 지역에 여러 노드들을 둔다. 그런데, 만약 AZ가 같으면, 한 zone에 문제가 발생할 경우, 모든 노드가 마비되어, 분산시스템 자체에 문제가 발생할 수 있다.
 - 그래서, zone을 격리시켜, 한 노드가 마비되었을 때, 다른 zone의 노드에는 영향이 없게 하여, 분산 시스템이 지속적으로 유지될 수 있게 한다.
+
+
+## Peering
+- private ip외에는 접근을 막은 경우, 다른 VPC에서 접근을 하고 싶을 때, peering이라는 것을 설정해서, 다른 VPC에서도 private ip로 접근이 가능하다.
+- 보통 로컬에서의 접근은 VPN으로 VPC에 접근을 하게 해놓고, 서버 내부에서의 통신은 다른 VPC에서 접근할 경우, peering을 통해서 접근을 할 수 있게 한다
+https://docs.aws.amazon.com/ko_kr/vpc/latest/peering/create-vpc-peering-connection.html

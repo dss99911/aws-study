@@ -1,0 +1,138 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  ClusterName:
+    Type: "String"
+    Default: "Dev Cluster"
+  EmrRelease:
+    Type: "String"
+    Default: "emr-6.7.0"
+    AllowedValues:
+      - "emr-6.7.0"
+
+Resources:
+  EmrCluster:
+    Type: AWS::EMR::Cluster
+    Properties:
+      Applications:
+        - Name: Spark
+        - Name: Livy
+        - Name: Ganglia
+        - Name: Zeppelin
+        - Name: JupyterEnterpriseGateway
+      BootstrapActions:
+        - Name: "EMR Bootstrap Script"
+          ScriptBootstrapAction:
+            Path: "s3://hyun/bootstrap.sh"
+      EbsRootVolumeSize: '100'
+      Name: !Ref ClusterName
+      JobFlowRole: EMR_EC2_DefaultRole
+      ServiceRole: EMR_DefaultRole
+      ReleaseLabel: !Ref EmrRelease
+      StepConcurrencyLevel: 5
+      VisibleToAllUsers: true
+      LogUri:
+        Fn::Sub: 's3://hyun/log/emr/'
+      Configurations:
+        - Classification: "hdfs-site"
+          ConfigurationProperties:
+            dfs.replication: 3
+        - Classification: "spark-defaults"
+          ConfigurationProperties:
+            spark.jars.packages: "com.johnsnowlabs.nlp:spark-nlp_2.12:4.0.1,graphframes:graphframes:0.8.1-spark3.0-s_2.12,io.delta:delta-core_2.12:1.2.0,com.microsoft.azure:synapseml_2.12:0.9.5"
+            spark.jars.excludes: "org.scala-lang:scala-reflect,org.apache.spark:spark-tags_2.12,org.scalactic:scalactic_2.12,org.scalatest:scalatest_2.12"
+            spark.sql.extensions: "io.delta.sql.DeltaSparkSessionExtension"
+            spark.sql.catalog.spark_catalog: "org.apache.spark.sql.delta.catalog.DeltaCatalog"
+            spark.serializer: "org.apache.spark.serializer.KryoSerializer"
+            spark.kryoserializer.buffer.max: "2000M"
+            spark.driver.maxResultSize: "0"
+            spark.yarn.stagingDir: "hdfs:///tmp"
+        - Classification: "livy-conf"
+          ConfigurationProperties:
+            livy.rsc.server.connect.timeout: "1200s"
+            livy.spark.deploy-mode: "client"
+            livy_session_startup_timeout_seconds: "600"
+        - Classification: "spark-hive-site"
+          ConfigurationProperties:
+            hive.metastore.glue.datacatalog.enabled: "true"
+            hive.metastore.client.factory.class: "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+        - Classification: "zeppelin-site"
+          ConfigurationProperties:
+            zeppelin.interpreter.lifecyclemanager.class: "org.apache.zeppelin.interpreter.lifecycle.TimeoutLifecycleManager"
+            zeppelin.interpreter.lifecyclemanager.timeout.checkinterval: "300000"
+            zeppelin.interpreter.lifecyclemanager.timeout.threshold: "1800000"
+            zeppelin.metric.enable.prometheus: "true"
+            zeppelin.notebook.s3.endpoint: "s3.ap-south-1.amazonaws.com"
+            zeppelin.notebook.s3.bucket: "hyun"
+            zeppelin.notebook.s3.user: "misc/notebook/dev"
+            zeppelin.notebook.storage: "org.apache.zeppelin.notebook.repo.S3NotebookRepo"
+            zeppelin.jobmanager.enable: "false"
+            zeppelin.jmx.enable: "true"
+            zeppelin.interpreter.connect.timeout: "600000"
+        - Classification: "zeppelin-env"
+          Configurations:
+            - Classification: "export"
+              ConfigurationProperties:
+                SPARK_SUBMIT_OPTIONS: "\"$SPARK_SUBMIT_OPTIONS --conf 'spark.executorEnv.PYTHONPATH=/usr/lib/spark/python/lib/py4j-src.zip:/usr/lib/spark/python/:<CPS>{{PWD}}/pyspark.zip<CPS>{{PWD}}/py4j-src.zip' --conf spark.yarn.isPython=true --conf 'spark.sql.legacy.parser.havingWithoutGroupByAsWhere=true' --conf 'spark.sql.execution.arrow.maxRecordsPerBatch=100000' --conf 'spark.sql.execution.arrow.enabled=true' --jars /usr/lib/spark/external/lib/spark-avro.jar\""
+      Instances:
+        TerminationProtected: true
+        Ec2SubnetId: "subnet-1"
+        Ec2KeyName: "hyun"
+        MasterInstanceGroup:
+          InstanceCount: 1
+          InstanceType: "m5.2xlarge"
+          EbsConfiguration:
+            EbsOptimized: true
+            EbsBlockDeviceConfigs:
+              - VolumeSpecification:
+                  SizeInGB: 128
+                  VolumeType: "gp2"
+                VolumesPerInstance: 2
+        CoreInstanceGroup:
+          Name: "Core Instance Group"
+          InstanceCount: 3
+          InstanceType: "m5.xlarge"
+          Market: "ON_DEMAND"
+          EbsConfiguration:
+            EbsOptimized: true
+            EbsBlockDeviceConfigs:
+              - VolumeSpecification:
+                  SizeInGB: 128
+                  VolumeType: "gp2"
+                VolumesPerInstance: 1
+        TaskInstanceGroups:
+          - Name: "Task Instance Group 1"
+            InstanceCount: 1
+            InstanceType: "m5.xlarge"
+            Market: "ON_DEMAND"
+            EbsConfiguration:
+              EbsOptimized: true
+              EbsBlockDeviceConfigs:
+                - VolumeSpecification:
+                    SizeInGB: 128
+                    VolumeType: "gp2"
+                  VolumesPerInstance: 1
+          - Name: "Task Instance Group 2"
+            InstanceCount: 1
+            InstanceType: "m5.2xlarge"
+            Market: "ON_DEMAND"
+            EbsConfiguration:
+              EbsOptimized: true
+              EbsBlockDeviceConfigs:
+                - VolumeSpecification:
+                    SizeInGB: 128
+                    VolumeType: "gp2"
+                  VolumesPerInstance: 2
+      ManagedScalingPolicy:
+        ComputeLimits:
+          MaximumCapacityUnits: 101
+          MaximumCoreCapacityUnits: 3
+          MaximumOnDemandCapacityUnits: 101
+          MinimumCapacityUnits: 3
+          UnitType: "VCPU"
+
+Outputs:
+  ClusterId:
+    Value:
+      Ref: EmrCluster
+    Description: The ID of the EMR Cluster
