@@ -1,7 +1,7 @@
 https://www.youtube.com/watch?v=bWPTq8z1vFY
 - create certificate
 - verify domain
-- create load balancer
+- create application load balancer with the certificate
 
 
 
