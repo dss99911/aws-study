@@ -15,6 +15,7 @@
 - https://aws.amazon.com/ec2/spot/instance-advisor/ 에 비용절감이 크고, interruption이 적은 spot instance를 찾을 수 있다.
 - [cheapest_spot_instance_retriever.py](cheapest_spot_instance_retriever.py)를 통해, 최저가 spot instance를 찾을 수 있다.
 - memory / core 비율이 비슷한 걸 써야, 메모리를 충분히 사용할 수 있 (executor.memory는 emr에서 가장 작은 instance의 값으로 자동 설정됨)
+  - executor.memory는 자동 설정 되지만, driver.memory는 당연히 설정 되지 않고, 1g가 default. 부족시, 증가 필요.
 - core가 많은 instance는 interruption 발생시 피해가 크므로, 적당히 적은 core의 인스턴스를 많이 쓰는게 중요.
 - 
 
