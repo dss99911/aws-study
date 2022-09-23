@@ -8,7 +8,7 @@ VPC안에 subnet이 존재한다.
 
 ## CIDR
 - subnet의 ip address 할당 방식
-- 기존에는 network address와 host address로 구분하고, class A~E 까지의 클래스를 나눠서 ip address를 할다앟였는데, 유연성이 떨어져서, 별도의 ip address할당 방식을 사
+- 기존에는 network address와 host address로 구분하고, class A~E 까지의 클래스를 나눠서 ip address를 할다앟였는데, 유연성이 떨어져서, 별도의 ip address할당 방식을 사용
 ```
 198.168.32.0/24 198.168.32.0~198.168.32.255 = 256
 
@@ -67,6 +67,8 @@ https://dev.classmethod.jp/articles/vpc-3/
 
 
 ## Peering
+https://docs.aws.amazon.com/ko_kr/vpc/latest/peering/create-vpc-peering-connection.html
 - private ip외에는 접근을 막은 경우, 다른 VPC에서 접근을 하고 싶을 때, peering이라는 것을 설정해서, 다른 VPC에서도 private ip로 접근이 가능하다.
 - 보통 로컬에서의 접근은 VPN으로 VPC에 접근을 하게 해놓고, 서버 내부에서의 통신은 다른 VPC에서 접근할 경우, peering을 통해서 접근을 할 수 있게 한다
-https://docs.aws.amazon.com/ko_kr/vpc/latest/peering/create-vpc-peering-connection.html
+- 보통 VPC는 10.50.0.0/16 와 같이 CIDR을 통해 private ip 대역폭을 설정 가능
+- peering이 정상 작동하기 위해서는 routing table에 특정 Ip대역폭은 해당 Peering을 이용하도록 설정한다.
