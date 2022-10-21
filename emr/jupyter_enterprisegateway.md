@@ -86,3 +86,17 @@ EMR 설정
 - ssh -i {key-file} -N -L 18888:localhost:18888 hadoop@{server-ip}
 - export SSL_CERT_FILE=nginx.crt
 - jupyter lab --gateway-url=https://xxx:18888
+
+## jupyter enterprisegateway 연결시, 로컬에 있는 파일 import 하기
+
+### 로컬
+- upload changed py files to sparksession's python path (use intellij plugin)
+- sc.addFile(path, recursive=True) 
+- whenever file changed, importlib.reload(your_module)
+
+### EMR studio
+- find notebook's s3 url
+- sc.addFile(s3_path, recursive=True)
+- whenever file changed, 
+  - copy s3 path to emr cluster's spark session's python path 
+  - importlib.reload(your_module)
