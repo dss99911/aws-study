@@ -8,7 +8,7 @@ VPC안에 subnet이 존재한다.
 
 ## CIDR
 - subnet의 ip address 할당 방식
-- 기존에는 network address와 host address로 구분하고, class A~E 까지의 클래스를 나눠서 ip address를 할다앟였는데, 유연성이 떨어져서, 별도의 ip address할당 방식을 사용
+- 기존에는 network address와 host address로 구분하고, class A~E 까지의 클래스를 나눠서 ip address를 할당하였는데, 유연성이 떨어져서, 별도의 ip address할당 방식을 사용
 ```
 198.168.32.0/24 198.168.32.0~198.168.32.255 = 256
 
@@ -21,6 +21,7 @@ VPC안에 subnet이 존재한다.
 198.168.32.0/22 198.168.32.0~198.168.35.255 = 1024(256*4)
 ```
 - 위 4개의 할당 받은 subnet을 합쳐서, 묶는 것을 supernetting이라고 하고, `198.168.32.0/22`가 CIDR로 표현한 subnet의 대역폭. 22의 의미는 이진수 22개를 subnet으로 사용하고, subnet아래의 host들은 나머지 10개의 이진수로 할당 할 수 있게 함
+- ipv4의 network address는 24자리인데(c class), 이 중, 뒤에 2개 bit을 host address로 할당 할 수 있게 하고, 앞에 22자리만 network address로 사용하는 방식
 https://dev.classmethod.jp/articles/vpc-3/
 
 ### public Subnet, private Subnet
