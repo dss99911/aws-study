@@ -23,7 +23,6 @@ on alarm tap of endpoint console, able to see when scaling occurred. but can't s
 able to see the instance count
 ```shell
 #aws application-autoscaling describe-scaling-activities --service-namespace sagemaker --resource-id endpoint/{endpoint-name}/variant/AllTraffic >> endpoint-2023-09-08.json
-aws application-autoscaling describe-scaling-activities --service-namespace sagemaker --resource-id endpoint/acs-score-v3-cibil-prod/variant/AllTraffic >> endpoint-2023-09-08.json
 ```
 
 ## Metric
