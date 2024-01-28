@@ -3,6 +3,9 @@ https://www.youtube.com/watch?v=bWPTq8z1vFY
 - verify domain
 - create application load balancer with the certificate
 
+Demerit
+- need Load balancer. it costs money
+- Two-Way SSL Authentication may not be available
 
 
 ![img.png](img.png)

@@ -24,3 +24,13 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/launch-a-spark
 ## cold start
 https://aws.amazon.com/ko/blogs/korea/new-provisioned-concurrency-for-lambda-functions/
 https://alphahackerhan.tistory.com/29 
+
+## layer
+- 다중 람다 function에서 코드 공유
+- extension
+  - used for monitoring, logging, or security check
+- docker image를 layer로는 못 쓰는 듯
+- 람다 함수를 image에서 생성한 경우, layer를 못 씀
+https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html?icmpid=docs_lambda_help
+https://aws.amazon.com/blogs/compute/working-with-lambda-layers-and-extensions-in-container-images/
+  - docker image에서 layer나 extension을 추가 하는 방법을 설명
