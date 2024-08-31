@@ -1,8 +1,12 @@
+set -ex
 sudo yum update -y
 
 # docker
 sudo yum install docker -y
 sudo systemctl start docker.service
+
+# python
+python3 -m ensurepip --upgrade
 
 # nginx
 mkdir /home/ec2-user/static
